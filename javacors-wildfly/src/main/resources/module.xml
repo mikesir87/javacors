@@ -1,0 +1,10 @@
+<module xmlns="urn:jboss:module:1.0" name="io.mikesir87.javacors.undertow">
+  <resources>
+    <resource-root path="javacors-runtime-${project.version}.jar"/>
+    <resource-root path="javacors-undertow-${project.version}.jar"/>
+  </resources>
+
+  <dependencies>
+    <module name="io.undertow.core" />
+  </dependencies>
+</module>

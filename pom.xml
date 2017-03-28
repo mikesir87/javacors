@@ -4,13 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.mikesir87</groupId>
-  <artifactId>wildfly-cors</artifactId>
+  <groupId>io.mikesir87.javacors</groupId>
+  <artifactId>javacors</artifactId>
+  <packaging>pom</packaging>
   <version>1.0.0-SNAPSHOT</version>
 
   <name>${project.artifactId}</name>
   <description>
-    A Wildfly module distribution that allows CORS filtering filters to Undertow
+    A project that provides CORS support to various Java frameworks/applications.
   </description>
   <url>https://github.com/mikesir87/${project.artifactId}</url>
 
@@ -45,53 +46,6 @@
           <source>${java.version.source}</source>
           <target>${java.version.target}</target>
         </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-module-descriptors</id>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <phase>package</phase>
-            <configuration>
-              <outputDirectory>${project.build.directory}</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/main/resources</directory>
-                  <filtering>true</filtering>
-                  <includes>
-                    <include>**/module.xml</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.0.0</version>
-        <executions>
-          <execution>
-            <id>create-modules-assembly</id>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <phase>package</phase>
-            <configuration>
-              <formats>
-                <format>dir</format>
-                <format>tar.gz</format>
-                <format>zip</format>
-              </formats>
-              <descriptors>
-                <descriptor>src/assembly/modules-assembly.xml</descriptor>
-              </descriptors>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
@@ -133,12 +87,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.undertow</groupId>
-      <artifactId>undertow-core</artifactId>
-    </dependency>
-
-
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>
@@ -166,4 +114,10 @@
     <hamcrest.version>1.3</hamcrest.version>
     <org.jmock.version>2.8.2</org.jmock.version>
   </properties>
+
+  <modules>
+    <module>javacors-runtime</module>
+    <module>javacors-undertow</module>
+    <module>javacors-wildfly</module>
+  </modules>
 </project>
