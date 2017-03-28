@@ -1,4 +1,4 @@
-<module xmlns="urn:jboss:module:1.0" name="io.mikesir87.wildfly.undertow.cors">
+<module xmlns="urn:jboss:module:1.0" name="io.mikesir87.undertow.cors">
   <resources>
     <resource-root path="wildfly-cors.jar"/>
   </resources>

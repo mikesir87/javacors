@@ -9,7 +9,7 @@
   <fileSets>
     <fileSet>
       <directory>${project.build.directory}</directory>
-      <outputDirectory>modules/io/mikesir87/wildfly/undertow/cors/main</outputDirectory>
+      <outputDirectory>modules/io/mikesir87/undertow/cors/main</outputDirectory>
       <includes>
         <include>*.jar</include>
         <include>module.xml</include>

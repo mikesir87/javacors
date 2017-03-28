@@ -1,4 +1,4 @@
-package io.mikesir87.wildfly.undertow.cors;
+package io.mikesir87.undertow.cors;
 
 import io.mikesir87.cors.RequestContext;
 import io.mikesir87.cors.ResponseHandler;
