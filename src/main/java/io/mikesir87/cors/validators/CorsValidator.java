@@ -1,4 +1,7 @@
-package io.mikesir87.cors;
+package io.mikesir87.cors.validators;
+
+import io.mikesir87.cors.CorsConfiguration;
+import io.mikesir87.cors.RequestContext;
 
 /**
  * Definition for a validator that handles a single validation for a pre-flight request. Each step is defined in the
@@ -17,5 +20,5 @@ public interface CorsValidator {
    * @param configuration Server-based configuration for CORS-handling.
    * @return True if headers should be added. False if not.
    */
-  boolean shouldAddHeaders(RequestContext requestContext, CorsConfiguration configuration);
+  boolean shouldAddHeaders(CorsRequestContext requestContext, CorsConfiguration configuration);
 }

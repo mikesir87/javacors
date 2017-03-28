@@ -1,7 +1,6 @@
 package io.mikesir87.cors.validators;
 
 import io.mikesir87.cors.CorsConfiguration;
-import io.mikesir87.cors.CorsValidator;
 import io.mikesir87.cors.RequestContext;
 
 /**
@@ -12,7 +11,7 @@ import io.mikesir87.cors.RequestContext;
  */
 public class OriginValidator implements CorsValidator {
 
-  public boolean shouldAddHeaders(RequestContext requestContext, CorsConfiguration configuration) {
+  public boolean shouldAddHeaders(CorsRequestContext requestContext, CorsConfiguration configuration) {
     String origin = requestContext.getOriginHeader();
 
     // Origin header MUST be provided (Spec 6.2, Step #1)

@@ -27,7 +27,7 @@ public class OriginValidatorTest {
   public JUnitRuleMockery context = new JUnitRuleMockery();
 
   @Mock
-  private RequestContext requestContext;
+  private CorsRequestContext requestContext;
 
   @Mock
   private CorsConfiguration corsConfiguration;
