@@ -3,6 +3,7 @@ package io.mikesir87.cors.validators;
 import io.mikesir87.cors.RequestContext;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,7 +41,8 @@ public class DelegatingCorsRequestContext implements CorsRequestContext {
 
   @Override
   public List<String> getRequestedHeadersAsList() {
-    return Arrays.asList(getRequestedHeaders().split(", "));
+    return (getRequestedHeaders() != null) ?
+      Arrays.asList(getRequestedHeaders().split(", ")) : Collections.emptyList();
   }
 
   @Override
