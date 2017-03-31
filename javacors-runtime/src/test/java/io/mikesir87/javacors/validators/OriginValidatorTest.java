@@ -7,6 +7,7 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,6 +48,28 @@ public class OriginValidatorTest {
   @Test
   public void validateWhenOriginIsNotAuthorized() {
     context.checking(createExpectations("http://somewhere.else"));
+    assertThat(validator.shouldAddHeaders(requestContext, corsConfiguration), is(false));
+  }
+
+  @Test
+  public void validateWhenUsingWildcardOrigin() {
+    context.checking(new Expectations() { {
+      allowing(requestContext).getOriginHeader();
+      will(returnValue("http://something.localhost"));
+      allowing(corsConfiguration).getAuthorizedOrigins();
+      will(returnValue(Collections.singletonList("*")));
+    } });
+    assertThat(validator.shouldAddHeaders(requestContext, corsConfiguration), is(true));
+  }
+
+  @Test
+  public void validateWhenWildcardNotOnlyOrigin() {
+    context.checking(new Expectations() { {
+      allowing(requestContext).getOriginHeader();
+      will(returnValue("http://something.localhost"));
+      allowing(corsConfiguration).getAuthorizedOrigins();
+      will(returnValue(Arrays.asList("http://somewhereelse.localhost/", "*")));
+    } });
     assertThat(validator.shouldAddHeaders(requestContext, corsConfiguration), is(false));
   }
 
