@@ -1,5 +1,7 @@
 # JavaCors
 
+[![Build Status](https://travis-ci.org/mikesir87/javacors.svg?branch=master)](https://travis-ci.org/mikesir87/javacors)
+
 This project provides CORS support and integrates it into various Java frameworks.
 
 ## Why this project?
