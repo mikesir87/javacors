@@ -2,6 +2,8 @@ package io.mikesir87.javacors.validators;
 
 import io.mikesir87.javacors.CorsConfiguration;
 
+import java.util.List;
+
 /**
  * A {@link CorsValidator} that validates that the requested request has an Origin header that is allowed by the
  * server configuration.
@@ -10,6 +12,8 @@ import io.mikesir87.javacors.CorsConfiguration;
  */
 public class OriginValidator implements CorsValidator {
 
+  private static final String WILDCARD_ORIGIN = "*";
+
   public boolean shouldAddHeaders(CorsRequestContext requestContext, CorsConfiguration configuration) {
     String origin = requestContext.getOriginHeader();
 
@@ -17,7 +21,11 @@ public class OriginValidator implements CorsValidator {
     if (origin == null)
       return false;
 
-    for (String authorizedOrigin : configuration.getAuthorizedOrigins()) {
+    List<String> authorizedOrigins = configuration.getAuthorizedOrigins();
+    if (authorizedOrigins.size() == 1 && authorizedOrigins.get(0).equals(WILDCARD_ORIGIN))
+      return true;
+
+    for (String authorizedOrigin : authorizedOrigins) {
       if (origin.equals(authorizedOrigin))
         return true;
     }
