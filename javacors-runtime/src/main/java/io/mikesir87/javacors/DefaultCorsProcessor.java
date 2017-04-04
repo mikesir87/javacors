@@ -1,8 +1,6 @@
 package io.mikesir87.javacors;
 
-import io.mikesir87.javacors.decorators.CredentialResponseDecorator;
-import io.mikesir87.javacors.decorators.OriginResponseDecorator;
-import io.mikesir87.javacors.decorators.ResponseDecorator;
+import io.mikesir87.javacors.decorators.*;
 import io.mikesir87.javacors.validators.*;
 
 import java.util.Arrays;
@@ -31,7 +29,11 @@ public class DefaultCorsProcessor implements CorsProcessor {
 
     decorators = Arrays.asList(
       new CredentialResponseDecorator(),
-      new OriginResponseDecorator()
+      new OriginResponseDecorator(),
+      new AllowedHeadersResponseDecorator(),
+      new AllowedMethodsResponseDecorator(),
+      new MaxAgeResponseDecorator(),
+      new ExposeHeadersResponseDecorator()
     );
   }
 
