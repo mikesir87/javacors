@@ -58,6 +58,22 @@ public class RequestedHeadersValidatorTest {
     assertThat(validator.shouldAddHeaders(requestContext, corsConfiguration), is(false));
   }
 
+  @Test
+  public void validateRequestWhenConfigIsNotCaseNormalized() {
+    context.checking(new Expectations() { {
+      allowing(requestContext).isPreFlightRequest();
+      will(returnValue(true));
+
+      allowing(requestContext).getRequestedHeadersAsList();
+      will(returnValue(Arrays.asList("Content-Type")));
+
+      allowing(corsConfiguration).getAuthorizedHeaders();
+      will(returnValue(Arrays.asList("Content-TYPE")));
+    } });
+
+    assertThat(validator.shouldAddHeaders(requestContext, corsConfiguration), is(true));
+  }
+
   private Expectations createExpectations(final boolean isPreFlight, final List<String> requestedHeaders) {
     return new Expectations() { {
       allowing(requestContext).isPreFlightRequest();
