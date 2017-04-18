@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,6 +39,17 @@ public class ExposeHeadersResponseDecoratorTest {
     context.checking(new Expectations() { {
       allowing(requestContext).isPreFlightRequest();
       will(returnValue(true));
+    } });
+    decorator.decorateResponse(responseHandler, requestContext, configuration);
+  }
+
+  @Test
+  public void validateHeaderNotAddedWhenNoHeadersConfigured() {
+    context.checking(new Expectations() { {
+      allowing(requestContext).isPreFlightRequest();
+      will(returnValue(false));
+      allowing(configuration).getExposedHeaders();
+      will(returnValue(Collections.emptyList()));
     } });
     decorator.decorateResponse(responseHandler, requestContext, configuration);
   }
