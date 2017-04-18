@@ -19,7 +19,9 @@ public class ExposeHeadersResponseDecorator implements ResponseDecorator {
   public void decorateResponse(ResponseHandler responseHandler,
                                CorsRequestContext requestContext,
                                CorsConfiguration configuration) {
-    if (!requestContext.isPreFlightRequest() && configuration.getExposedHeaders() != null) {
+    if (!requestContext.isPreFlightRequest() &&
+      configuration.getExposedHeaders() != null &&
+      configuration.getExposedHeaders().size() >= 1) {
       responseHandler.addHeader(HEADER_NAME, String.join(", ", configuration.getExposedHeaders()));
     }
   }
