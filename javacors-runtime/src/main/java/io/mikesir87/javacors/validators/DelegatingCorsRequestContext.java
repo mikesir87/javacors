@@ -41,7 +41,7 @@ public class DelegatingCorsRequestContext implements CorsRequestContext {
 
   @Override
   public List<String> getRequestedHeadersAsList() {
-    return (getRequestedHeaders() != null) ?
+    return (getRequestedHeaders() != null && ! getRequestedHeaders().equals("")) ?
       Arrays.asList(getRequestedHeaders().split(", ")) : Collections.emptyList();
   }
 
