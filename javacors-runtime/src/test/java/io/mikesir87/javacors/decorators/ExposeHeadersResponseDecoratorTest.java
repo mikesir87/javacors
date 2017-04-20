@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -53,5 +54,18 @@ public class ExposeHeadersResponseDecoratorTest {
       oneOf(responseHandler).addHeader("Access-Control-Expose-Headers", "Content-Length, Location");
     } });
     decorator.decorateResponse(responseHandler, requestContext, configuration);
+  }
+
+  @Test
+  public void testDecorateResponseWithEmptyAccessControlExposeHeaders() {
+    final List<String> headers = Collections.emptyList();
+    context.checking(new Expectations() {
+      {
+        allowing(requestContext).isPreFlightRequest();
+        will(returnValue(false));
+        allowing(configuration).getExposedHeaders();
+        will(returnValue(headers));
+      }
+    });
   }
 }
