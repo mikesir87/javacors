@@ -73,6 +73,42 @@ public class OriginValidatorTest {
     assertThat(validator.shouldAddHeaders(requestContext, corsConfiguration), is(false));
   }
 
+  @Test
+  public void validateScopedWildcardWhenValid() {
+    context.checking(new Expectations() { {
+      allowing(requestContext).getOriginHeader();
+      will(returnValue("http://test.localhost"));
+      allowing(corsConfiguration).getAuthorizedOrigins();
+      will(returnValue(Collections.singletonList("*.localhost")));
+    } });
+
+    assertThat(validator.shouldAddHeaders(requestContext, corsConfiguration), is(true));
+  }
+
+  @Test
+  public void validateScopedWildcardWhenMultiLevelValid() {
+    context.checking(new Expectations() { {
+      allowing(requestContext).getOriginHeader();
+      will(returnValue("http://another.test.localhost"));
+      allowing(corsConfiguration).getAuthorizedOrigins();
+      will(returnValue(Collections.singletonList("*.localhost")));
+    } });
+
+    assertThat(validator.shouldAddHeaders(requestContext, corsConfiguration), is(true));
+  }
+
+  @Test
+  public void validateScopedWildcardWhenNotValid() {
+    context.checking(new Expectations() { {
+      allowing(requestContext).getOriginHeader();
+      will(returnValue("http://test.not-localhost"));
+      allowing(corsConfiguration).getAuthorizedOrigins();
+      will(returnValue(Collections.singletonList("*.localhost")));
+    } });
+
+    assertThat(validator.shouldAddHeaders(requestContext, corsConfiguration), is(false));
+  }
+
   private Expectations createExpectations(final String requestOrigin) {
     return new Expectations() { {
       allowing(requestContext).getOriginHeader();
