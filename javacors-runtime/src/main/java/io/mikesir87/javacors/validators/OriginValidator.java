@@ -28,6 +28,9 @@ public class OriginValidator implements CorsValidator {
     for (String authorizedOrigin : authorizedOrigins) {
       if (origin.equals(authorizedOrigin))
         return true;
+      if (authorizedOrigin.startsWith(WILDCARD_ORIGIN + ".") &&
+          origin.endsWith(authorizedOrigin.substring(WILDCARD_ORIGIN.length())))
+        return true;
     }
 
     return false;
