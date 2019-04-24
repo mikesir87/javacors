@@ -5,6 +5,8 @@ import io.mikesir87.javacors.RequestContext;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A {@link CorsRequestContext} that delegates what it can to a provided {@link RequestContext}.
@@ -41,8 +43,12 @@ public class DelegatingCorsRequestContext implements CorsRequestContext {
 
   @Override
   public List<String> getRequestedHeadersAsList() {
-    return (getRequestedHeaders() != null && ! getRequestedHeaders().equals("")) ?
-      Arrays.asList(getRequestedHeaders().split(", ")) : Collections.emptyList();
+    if (getRequestedHeaders() == null || getRequestedHeaders().equals(""))
+      return Collections.emptyList();
+
+    return Stream.of(getRequestedHeaders().split(","))
+      .map(String::trim)
+      .collect(Collectors.toList());
   }
 
   @Override

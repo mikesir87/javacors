@@ -53,6 +53,22 @@ public class DelegatingCorsRequestContextTest {
   }
 
   @Test
+  public void testGetRequestedHeadersAsListWithSpaces() {
+    context.checking(new Expectations() {
+      {
+        allowing(requestContext).getRequestedHeaders();
+        will(returnValue("Authorization, Content-Type, Cookie"));
+      }
+    });
+
+    List<String> requestedHeadersAsList = delegatingContext.getRequestedHeadersAsList();
+    assertThat(requestedHeadersAsList.size(), is(3));
+    assertThat(requestedHeadersAsList.contains("Authorization"), is(true));
+    assertThat(requestedHeadersAsList.contains("Content-Type"), is(true));
+    assertThat(requestedHeadersAsList.contains("Cookie"), is(true));
+  }
+
+  @Test
   public void testGetRequestedHeadersAsListWithEmptyAccessControlRequestHeader() {
     context.checking(new Expectations() {
       {
