@@ -12,7 +12,13 @@ import java.util.List;
  */
 public class OriginValidator implements CorsValidator {
 
+  private static final String NAME = "OriginValidator";
   private static final String WILDCARD_ORIGIN = "*";
+
+  @Override
+  public String getName() {
+    return NAME;
+  }
 
   public boolean shouldAddHeaders(CorsRequestContext requestContext, CorsConfiguration configuration) {
     String origin = requestContext.getOriginHeader();

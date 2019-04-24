@@ -14,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -53,6 +54,28 @@ public class DefaultCorsProcessorTest {
 
   @Before
   public void setUp() {
+    context.checking(new Expectations() { {
+      allowing(corsConfiguration).getAuthorizedHeaders();
+      will(returnValue(Collections.emptyList()));
+      allowing(corsConfiguration).getAuthorizedMethods();
+      will(returnValue(Collections.emptyList()));
+      allowing(corsConfiguration).getAuthorizedOrigins();
+      will(returnValue(Collections.emptyList()));
+      allowing(corsConfiguration).getExposedHeaders();
+      will(returnValue(Collections.emptyList()));
+      allowing(corsConfiguration).getMaxAgeCacheValue();
+      will(returnValue(60));
+      allowing(corsConfiguration).allowCredentials();
+      will(returnValue(true));
+    } });
+
+    context.checking(new Expectations() { {
+      allowing(validator1).getName();
+      will(returnValue("VALIDATOR1"));
+      allowing(validator2).getName();
+      will(returnValue("VALIDATOR2"));
+    }});
+
     processor = new DefaultCorsProcessor(corsConfiguration, Arrays.asList(validator1, validator2),
       Arrays.asList(decorator1, decorator2));
   }

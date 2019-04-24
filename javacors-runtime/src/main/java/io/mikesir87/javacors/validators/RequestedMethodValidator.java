@@ -10,6 +10,13 @@ import io.mikesir87.javacors.CorsConfiguration;
  */
 public class RequestedMethodValidator implements CorsValidator {
 
+  private static final String NAME = "RequestedMethodValidator";
+
+  @Override
+  public String getName() {
+    return NAME;
+  }
+
   @Override
   public boolean shouldAddHeaders(CorsRequestContext requestContext, CorsConfiguration configuration) {
     if (!requestContext.isPreFlightRequest())

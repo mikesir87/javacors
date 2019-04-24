@@ -113,11 +113,59 @@
           <additionalparam>-Xdoclint:none</additionalparam>
         </configuration>
       </plugin>
+      
+      <plugin>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ban-other-loggers</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <bannedDependencies>
+                  <searchTransitive>true</searchTransitive>
+                  <excludes>
+                    <!-- Ban the secondary frameworks -->
+                    <exclude>log4j:log4j</exclude>
+                    <exclude>commons-logging</exclude>
+                    <!-- Ban other slf4j bindings so we don't end up in an
+                      infinite loop -->
+                    <exclude>org.slf4j:slf4j-log4j12</exclude>
+                    <exclude>org.slf4j:slf4j-jcl.jar</exclude>
+                    <exclude>org.slf4j:slf4j-jdk14.jar</exclude>
+                  </excludes>
+                  <message>Secondary logging frameworks are
+                    banned in
+                    preference
+                    to org.slf4j:*-over-slf4j</message>
+                </bannedDependencies>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>log4j-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
       <dependency>
         <groupId>io.undertow</groupId>
         <artifactId>undertow-core</artifactId>
@@ -152,6 +200,10 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -270,6 +322,7 @@
     <java.version.target>${java.version.source}</java.version.target>
     <modules.staging.directory>${project.build.directory}/modules</modules.staging.directory>
     <undertow.core.version>1.4.0.Final</undertow.core.version>
+    <slf4j.version>1.7.26</slf4j.version>
     <junit.version>4.12</junit.version>
     <hamcrest.version>1.3</hamcrest.version>
     <org.jmock.version>2.8.2</org.jmock.version>

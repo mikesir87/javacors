@@ -14,6 +14,12 @@ import io.mikesir87.javacors.CorsConfiguration;
 public interface CorsValidator {
 
   /**
+   * Get a name for the validator.
+   * @return The name for the validator.
+   */
+  String getName();
+
+  /**
    * Should the CORS headers be added to the provided request?
    * @param requestContext Details about the request in question.
    * @param configuration Server-based configuration for CORS-handling.
