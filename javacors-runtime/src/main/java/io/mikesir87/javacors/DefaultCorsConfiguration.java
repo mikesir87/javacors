@@ -13,7 +13,7 @@ public class DefaultCorsConfiguration implements CorsConfiguration {
 
   private static final List<String> EMPTY_LIST = Collections.emptyList();
   private static final List<String> DEFAULT_AUTHORIZED_METHODS =
-    Arrays.asList("GET", "POST", "HEAD", "PUT", "DELETE", "OPTIONS");
+    Arrays.asList("GET", "POST", "HEAD", "PUT", "DELETE", "OPTIONS", "PATCH");
   private static final List<String> DEFAULT_AUTHORIZED_HEADERS =
     Arrays.asList("Origin", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method",
       "Access-Control-Request-Headers");
